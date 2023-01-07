@@ -36,9 +36,17 @@ class LoginForm(FlaskForm):
 
         #Validate the account
         #Check account password matches hash - DONE
-        #Check account exists
+        #Check account exists - DONE
         #Check account is enabled
         account_found = Account.query.filter_by(email=self.email.data).first()
+        if not account_found:
+            self.email.errors += ('Sorry an account with this email address has not been found.',)
+            return False
+
+        if not account_found.is_enabled:
+            self.email.errors += ('Your account is locked out.',)
+            return False
+
         print('Found Account', self.password.data, account_found.password)
         if not bcrypt.checkpw(bytes(self.password.data,'UTF-8'), bytes(account_found.password,'UTF-8')):
             self.password.errors += ('Password is incorrect.',)

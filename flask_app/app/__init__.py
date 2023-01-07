@@ -3,6 +3,7 @@ from flask import Flask
 from config import Config
 from app.extensions import db
 from app.extensions import csrf
+from app.extensions import migrate
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -11,6 +12,7 @@ def create_app(config_class=Config):
     # Initialize Flask extensions here
     db.init_app(app)
     csrf.init_app(app)
+    migrate.init_app(app,db)
 
 
     # Register blueprints here
