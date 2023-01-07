@@ -1,0 +1,9 @@
+{% if form.errors %}
+<div class="form-errors">
+    <ul>
+        {% for key in form.errors.keys() %}
+            <li>{{ form.errors[key][0] }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

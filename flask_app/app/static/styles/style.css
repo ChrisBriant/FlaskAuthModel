@@ -1,0 +1,79 @@
+
+:root {
+    --primary-color: #6F38C5;
+    --secondary-color: #87A2FB;
+    --background-color: #EEEEEE;
+    --error-text : #460000;
+    --error-bg : #ec9797;
+    --success-color : #025402;
+    --button-color: #ADDDD0;
+    --button-text : #333;
+    --button-font-size : 1rem;
+    --button-small-font-size : .75rem;
+    --max-width: 1100px;
+    /* links */
+    --link-on-purple-color : #00b400;
+    --link-on-purple-hover-color: #00e400;
+    --link-on-blue-color: #d1d651;
+    --link-on-blue-hover-color: #faff5e;
+}
+
+
+h2 {
+    width: 100%;
+}
+
+.title {
+    margin: 5px;
+    width: 100%;
+}
+
+.content {
+    margin: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.post {
+    flex: 20%;
+    padding: 10px;
+    margin: 5px;
+    background-color: #f3f3f3;
+    inline-size: 100%;
+}
+
+.title a {
+    color: #00a36f;
+    text-decoration: none;
+}
+
+nav a {
+    color: #d64161;
+    font-size: 3em;
+    margin-left: 50px;
+    text-decoration: none;
+}
+
+ /* Forms  */
+
+ .form-group {
+    display: flex;
+    justify-content: space-between;
+ }
+
+ .form-group label {
+    margin-right: 6px;
+ }
+
+ .form-errors {
+    color: var(--error-text);
+    background: var(--error-bg);
+    padding: 6px;
+    border-radius: 10px;
+ }
+
+ .form-dialog {
+    display: flex;
+ }
