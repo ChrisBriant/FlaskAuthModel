@@ -1,9 +1,12 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField
 from wtforms.validators import DataRequired, Email, Regexp
+from flask_login import login_user
 from app.models.account import Account
 from app.extensions import db
 from .forms import *
+#from pymysql.err import IntegrityError
+from sqlalchemy.exc import IntegrityError
 import bcrypt
 
 
@@ -23,6 +26,26 @@ class RegistrationForm(FlaskForm):
             self.password.errors += ('Passwords do not match.',)
             return False
 
+        #Try to create the account
+        try:
+            salt = bcrypt.gensalt()
+            hashed_passwd = bcrypt.hashpw(bytes(self.password.data,'UTF-8'), salt)
+            
+            account = Account(
+                username= self.username.data,
+                password = hashed_passwd,
+                email = self.email.data,
+                is_enabled = False
+            )
+            db.session.add(account)
+            db.session.commit()
+        except IntegrityError as ie:
+            #Handle a duplicate user account
+            self.email.errors += ('An account already exists for this email address.',)
+            return False
+        except Exception as e:
+            self.email.errors += ('Sorry, an error occured creating the account.',)
+            return False
         return True
 
 class LoginForm(FlaskForm):
@@ -51,5 +74,6 @@ class LoginForm(FlaskForm):
         if not bcrypt.checkpw(bytes(self.password.data,'UTF-8'), bytes(account_found.password,'UTF-8')):
             self.password.errors += ('Password is incorrect.',)
             return False
+        login_user(account_found,remember=True)
 
         return True

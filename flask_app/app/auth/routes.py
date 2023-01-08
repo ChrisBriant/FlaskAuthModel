@@ -26,17 +26,18 @@ def register():
     if request.method == 'POST':
         print('I will perform registration here')
         if form.validate_on_submit():
-            salt = bcrypt.gensalt()
-            hashed_passwd = bcrypt.hashpw(bytes(form.password.data,'UTF-8'), salt)
-            account = Account(
-                username= form.username.data,
-                password = hashed_passwd,
-                email = form.email.data,
-                is_enabled = False
-            )
-            db.session.add(account)
-            db.session.commit()
-            print('Form is valid', hashed_passwd)
+            # salt = bcrypt.gensalt()
+            # hashed_passwd = bcrypt.hashpw(bytes(form.password.data,'UTF-8'), salt)
+            
+            # account = Account(
+            #     username= form.username.data,
+            #     password = hashed_passwd,
+            #     email = form.email.data,
+            #     is_enabled = False
+            # )
+            # db.session.add(account)
+            # db.session.commit()
+            print('Form is valid')
         else:
             print(form.errors)
         #return redirect(url_for('auth.index'))

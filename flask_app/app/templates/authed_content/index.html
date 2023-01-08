@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <span class="title"><h1>{% block title %} You Are Authenticated{% endblock %}</h1></span>
+    <div class="content">
+        <h1>Hello {{ name }}</h1>
+    </div>
+{% endblock %}

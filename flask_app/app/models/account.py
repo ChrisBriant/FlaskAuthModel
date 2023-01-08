@@ -1,6 +1,7 @@
 from app.extensions import db
+from flask_login import UserMixin
 
-class Account(db.Model):
+class Account(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30))
     password = db.Column(db.String(75))
