@@ -18,7 +18,7 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
 
     #Login Manager Config
-    login_manager.login_view = 'auth.routes.index'
+    login_manager.login_view = 'auth.index'
     @login_manager.user_loader
     def load_user(user_id):
         return Account.query.get(int(user_id))
