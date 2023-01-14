@@ -7,6 +7,7 @@ class Account(UserMixin,db.Model):
     password = db.Column(db.String(75))
     email = db.Column(db.String(100), unique=True)
     is_enabled = db.Column(db.Boolean())
+    code = db.Column(db.String(32))
 
     def __repr__(self):
         return f'<Account "{self.username}">'

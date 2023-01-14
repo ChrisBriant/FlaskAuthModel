@@ -5,9 +5,11 @@ from flask_login import login_user
 from app.models.account import Account
 from app.extensions import db
 from .forms import *
+from app import Config
+from app.messaging.email import send_confirm_email 
 #from pymysql.err import IntegrityError
 from sqlalchemy.exc import IntegrityError
-import bcrypt
+import bcrypt, random, string
 
 
 class RegistrationForm(FlaskForm):
@@ -30,15 +32,23 @@ class RegistrationForm(FlaskForm):
         try:
             salt = bcrypt.gensalt()
             hashed_passwd = bcrypt.hashpw(bytes(self.password.data,'UTF-8'), salt)
-            
+            #Hash for activation
+            # initializing size of string
+            N = 32
+            code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
+             
             account = Account(
                 username= self.username.data,
                 password = hashed_passwd,
                 email = self.email.data,
-                is_enabled = False
+                is_enabled = False,
+                code = code
             )
             db.session.add(account)
             db.session.commit()
+            #Send activation email
+            activation_url = f'{Config.BASE_URL}/auth/verify/{code}'
+            send_confirm_email(self.email.data,self.username.data,activation_url)
         except IntegrityError as ie:
             #Handle a duplicate user account
             self.email.errors += ('An account already exists for this email address.',)

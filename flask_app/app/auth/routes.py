@@ -42,3 +42,13 @@ def register():
             print(form.errors)
         #return redirect(url_for('auth.index'))
     return render_template('auth/register.html',form=form)
+
+
+@bp.route('/verify/<code>', methods=('GET', 'POST'))
+def verify(code):
+    account_found = Account.query.filter_by(code=code).first()
+    if account_found:
+        account_found.is_enabled = True
+        db.session.commit()
+        print('Set the account to enabled')
+    return render_template('auth/verify.html', account_found=account_found)

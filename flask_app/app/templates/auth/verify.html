@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if account_found %}
+    <p>Thank you, your account has been successfully activated.</p>
+    <p>Please visit the <a href="/auth/">sign in</a> page to log in.</p>
+{% else %}
+    <p>Sorry no account was found for this registration code.</p>
+{% endif %}
+
+{% endblock %}
