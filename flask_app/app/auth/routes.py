@@ -3,6 +3,7 @@ from app.auth import bp
 from app.models.account import Account
 #from app.models.question import Question
 from app.extensions import db
+from flask_login import logout_user
 from .forms import *
 import bcrypt
 
@@ -52,3 +53,9 @@ def verify(code):
         db.session.commit()
         print('Set the account to enabled')
     return render_template('auth/verify.html', account_found=account_found)
+
+@bp.route('/logout', methods=('GET', 'POST'))
+@bp.route('/signout', methods=('GET', 'POST'))
+def logout():
+    logout_user()
+    return redirect(url_for('auth.index'))
