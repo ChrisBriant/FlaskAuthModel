@@ -2,16 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %} - FlaskApp</title>
+    <title>FlaskAuthApp</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
-    <nav>
-        <a href="{{ url_for('main.index') }}">FlaskApp</a>
-        <a href="{{ url_for('posts.index') }}">Posts</a>
-        <a href="{{ url_for('posts.categories') }}">Categories</a>
-        <a href="{{ url_for('questions.index') }}">Questions</a>
-    </nav>
+    {% if current_user.is_authenticated %}
+        {% include "navauthed.html" %}
+    {% else %}
+        {% include "navunauthed.html" %}
+    {% endif %}
     <hr>
     <div class="content">
         {% block content %} {% endblock %}

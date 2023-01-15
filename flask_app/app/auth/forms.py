@@ -7,7 +7,6 @@ from app.extensions import db
 from .forms import *
 from app import Config
 from app.messaging.email import send_confirm_email, send_password_reset_email 
-#from pymysql.err import IntegrityError
 from sqlalchemy.exc import IntegrityError
 import bcrypt, random, string
 
