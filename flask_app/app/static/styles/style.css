@@ -6,6 +6,8 @@
     --error-text : #460000;
     --error-bg : #ec9797;
     --success-color : #025402;
+    --success-bg : #a4d6a4;
+    --success-text : #011d01;
     --button-color: #ADDDD0;
     --button-text : #333;
     --button-font-size : 1rem;
@@ -70,6 +72,13 @@ nav a {
  .form-errors {
     color: var(--error-text);
     background: var(--error-bg);
+    padding: 6px;
+    border-radius: 10px;
+ }
+
+ .success-message {
+    color: var(--success-text);
+    background: var(--success-bg);
     padding: 6px;
     border-radius: 10px;
  }

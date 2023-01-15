@@ -6,7 +6,7 @@ from app.models.account import Account
 from app.extensions import db
 from .forms import *
 from app import Config
-from app.messaging.email import send_confirm_email 
+from app.messaging.email import send_confirm_email, send_password_reset_email 
 #from pymysql.err import IntegrityError
 from sqlalchemy.exc import IntegrityError
 import bcrypt, random, string
@@ -86,4 +86,55 @@ class LoginForm(FlaskForm):
             return False
         login_user(account_found,remember=True)
 
+        return True
+
+class ForgotForm(FlaskForm):
+    email = EmailField('Email', validators=[Email()])
+
+    def validate(self):
+        result = super().validate()
+        if not result:
+            return False
+        
+        #Try to find account
+        account_found = Account.query.filter_by(email=self.email.data).first()
+        if not account_found:
+            self.email.errors += ('Sorry an account with this email address has not been found.',)
+            return False
+
+        #Create the code to send for the password reset
+        N = 32
+        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
+        account_found.code = code
+        db.session.commit()
+        print('Sending code', code)
+        #SEND EMAIL
+        activation_url = f'{Config.BASE_URL}/auth/reset/{code}'
+        print('actication code', activation_url)
+        send_password_reset_email(self.email.data,account_found.username,activation_url)
+        return True
+
+        
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[Regexp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{10,}$',message='Password does not meet complexity requirements.')])
+    confirmpass = PasswordField('Confirm Password')
+
+    def validate(self):
+        result = super().validate()
+        if not result:
+            return False
+        
+        if self.password.data != self.confirmpass.data:
+            self.password.errors += ('Passwords do not match.',)
+            return False
+
+        #Try to find account
+        # account_found = Account.query.filter_by(email=self.email.data).first()
+        # if not account_found:
+        #     self.email.errors += ('Sorry an account with this email address has not been found.',)
+        #     return False
+        # salt = bcrypt.gensalt()
+        # hashed_passwd = bcrypt.hashpw(bytes(self.password.data,'UTF-8'), salt)
+        # account_found.password = hashed_passwd
         return True
