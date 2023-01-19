@@ -23,7 +23,8 @@ def register():
             #Send to the login form
             form = LoginForm()
             success_message = 'Thank you for registering. Please check your mailbox and follow the instructions to activate your account.'
-            return render_template('auth/index.html',form=form,success_message=success_message)
+            return redirect(url_for('auth.index',form=form,success_message=success_message))
+            #return render_template('auth/index.html',form=form,success_message=success_message)
     return render_template('auth/register.html',form=form)
 
 
