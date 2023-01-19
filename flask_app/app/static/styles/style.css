@@ -84,6 +84,11 @@ main {
     text-decoration: none;
 }
 
+/* header  */
+
+.flash-messages {
+    margin: 20px 10px;
+}
 
  /* Forms  */
 
@@ -101,6 +106,14 @@ main {
     background: var(--error-bg);
     padding: 6px;
     border-radius: 10px;
+ }
+
+ .form-errors ul, .success-message ul {
+    list-style-type: none;
+ }
+
+ .form-errors ul li, .success-message ul li {
+    margin: 6px 0;
  }
 
  .success-message {
@@ -194,7 +207,7 @@ main {
  /* responsive  */
 
  @media(max-width: 440px) {
-    .dialog.login, .dialog.forgot {
+    .dialog.login, .dialog.forgot, .dialog.reset-pass {
         width: 90%;
     }
 

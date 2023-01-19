@@ -23,10 +23,13 @@ def register():
     if request.method == 'POST':
         print('I will perform registration here')
         if form.validate_on_submit():
+            #Send to the login form
+            form = LoginForm()
+            success_message = 'Thank you for registering. Please check your mailbox and follow the instructions to activate your account.'
+            return render_template('auth/index.html',form=form,success_message=success_message)
             print('Form is valid')
         else:
             print(form.errors)
-        #return redirect(url_for('auth.index'))
     return render_template('auth/register.html',form=form)
 
 
@@ -51,7 +54,6 @@ def forgot():
     form = ForgotForm()
     if form.validate_on_submit():
         success_message = 'You have been sent a link to reset your password. Please visit your email and click on the link to complete the process.'
-        print('Email has been sent')
     return render_template('auth/forgotpassword.html',form=form,success_message=success_message)
 
 
@@ -73,10 +75,6 @@ def reset(code):
             db.session.commit()
             success_message = 'Your password has been reset successfully, you can login below.'
             form = LoginForm()
-            return render_template('auth/index.html',form=form,success_message=success_message)
-        # account_found = Account.query.filter_by(code=code).first()
-        # if account_found:
-        #     account_found.is_enabled = True
-        #     db.session.commit()
-        #     print('Set the account to enabled')
+            return redirect(url_for('auth.index',form=form,success_message=success_message))
+            #return render_template('auth/index.html',form=form,success_message=success_message)
     return render_template('auth/resetpassword.html',form=form,error_message=error_message)

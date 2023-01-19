@@ -13,9 +13,11 @@
             {% include "navunauthed.html" %}
         {% endif %}
         <hr/>
-        {% include "dialogs/formerrors.html" %}
-        {% include "dialogs/errormessage.html" %}
-        {% include "dialogs/successmessage.html" %}
+        <div class="flash-messages">
+            {% include "dialogs/formerrors.html" %}
+            {% include "dialogs/errormessage.html" %}
+            {% include "dialogs/successmessage.html" %}
+        </div>
     </header>
     
     <main>

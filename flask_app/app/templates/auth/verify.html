@@ -2,11 +2,16 @@
 
 {% block content %}
 
-{% if account_found %}
-    <p>Thank you, your account has been successfully activated.</p>
-    <p>Please visit the <a href="/auth/">sign in</a> page to log in.</p>
-{% else %}
-    <p>Sorry no account was found for this registration code.</p>
-{% endif %}
+<section class="centered">
+    <div class="section-container">
+        {% if account_found %}
+            <h1>Thank you, your account has been successfully activated.</h1>
+            <h2>Please visit the <a href="/auth/">sign in</a> page to log in.</h2>
+        {% else %}
+            <h1>Sorry no account was found for this registration code.</h1>
+        {% endif %}
+    </div>
+</section>
+
 
 {% endblock %}
