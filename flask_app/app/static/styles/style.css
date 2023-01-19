@@ -1,6 +1,6 @@
 
 :root {
-    --primary-color: #6F38C5;
+    --primary-color: #4f7ff0;
     --secondary-color: #87A2FB;
     --background-color: #EEEEEE;
     --error-text : #460000;
@@ -11,8 +11,8 @@
     --nav-color : #4f7ff0;
     --nav-text : #c4c4c4; 
 
-    --button-color: #ADDDD0;
-    --button-text : #333;
+    --button-color: #ead34d;
+    --button-text : rgb(122, 122, 122);
     --button-font-size : 1rem;
     --button-small-font-size : .75rem;
     --max-width: 1100px;
@@ -37,6 +37,7 @@ html, body {
 nav {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     padding: 6px;
     background-color: var(--nav-color);
 }
@@ -61,12 +62,13 @@ h2 {
     width: 100%;
 }
 
-.content {
-    margin: 5px;
+main {
     width: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    justify-content: center;
+    min-height: 80vh;
 }
 
 .post {
@@ -110,4 +112,93 @@ h2 {
 
  .form-dialog {
     display: flex;
+ }
+
+ input {
+    padding: 6px;
+ }
+
+ /*sections */
+
+ section.centered h1,h2{
+    text-align: center;
+ }
+
+ section.centered h1,h2,p{
+    margin: 8px 0;
+ }
+
+ section.centered { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ }
+
+ section .section-container {
+    text-align: left;
+ }
+
+ section .section-container.about {
+    width: 40%;
+ }
+
+ /* dialogs  */
+
+ .dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--primary-color);
+    color: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 10px;
+ }
+
+ .dialog.login {
+    width: 40%;
+ }
+
+ .dialog.forgot {
+    width: 40%;
+ }
+
+ /* buttons */
+
+ .btn {
+    margin: 4px;
+    padding: 6px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 10px;
+    background: var(--button-color);
+    color: #333;
+ }
+
+ .btn:hover {
+    box-shadow: 0 rgba(0, 0, 0, 0);
+    cursor: pointer;
+    background: var(--button-color);
+    color: #333;
+ }
+
+ /* forms  */
+
+ .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 4px 0;
+ }
+
+ /* responsive  */
+
+ @media(max-width: 440px) {
+    .dialog.login, .dialog.forgot {
+        width: 90%;
+    }
+
+    section .section-container.about {
+        width: 90%;
+    }
  }

@@ -6,14 +6,24 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
-    {% if current_user.is_authenticated %}
-        {% include "navauthed.html" %}
-    {% else %}
-        {% include "navunauthed.html" %}
-    {% endif %}
-    <hr>
-    <div class="content">
+    <header>
+        {% if current_user.is_authenticated %}
+            {% include "navauthed.html" %}
+        {% else %}
+            {% include "navunauthed.html" %}
+        {% endif %}
+        <hr/>
+        {% include "dialogs/formerrors.html" %}
+        {% include "dialogs/errormessage.html" %}
+        {% include "dialogs/successmessage.html" %}
+    </header>
+    
+    <main>
         {% block content %} {% endblock %}
-    </div>
+    </main>
+    <footer>
+
+    </footer>
+
 </body>
 </html>

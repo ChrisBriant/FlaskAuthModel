@@ -1,26 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <span class="title"><h1>{% block title %} Login {% endblock %}</h1></span>
-    <div class="content">
+    <section class="centered">
         {% include "dialogs/formerrors.html" %}
         {% include "dialogs/successmessage.html" %}
-        <h1>Sign In</h1>
-        <div class="form-dialog">
-            <form action=""  autocomplete="on" method="POST" class="capture-form">
-                {{ form.csrf_token }}
-                <div class="form-group">
-                    {{ form.email.label }}
-                    {{ form.email }}
-                </div>
-                <div class="form-group">
-                    {{ form.password.label }}
-                    {{ form.password }}
-                </div>
-                <div class="btn-group">
-                    <button id="submit-register" class="btn btn-primary submit-btn" type="submit">Submit</button>
-                </div>
-            </form>
-        </div>        
-    </div>
+        <div class="dialog login">
+            <h1>Sign In</h1>
+            <div class="form-dialog">
+                <form action=""  autocomplete="on" method="POST" class="capture-form">
+                    {{ form.csrf_token }}
+                    <div class="form-group">
+                        {{ form.email.label }}
+                        {{ form.email }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.password.label }}
+                        {{ form.password }}
+                    </div>
+                    <div class="btn-group">
+                        <button id="submit-register" class="btn btn-primary submit-btn" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>   
+        </div>
+    </section>
 {% endblock %}
