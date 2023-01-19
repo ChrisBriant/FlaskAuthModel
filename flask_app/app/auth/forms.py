@@ -10,7 +10,6 @@ from app.messaging.email import send_confirm_email, send_password_reset_email
 from sqlalchemy.exc import IntegrityError
 import bcrypt, random, string
 
-
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = EmailField('Email', validators=[Email()])
@@ -23,7 +22,6 @@ class RegistrationForm(FlaskForm):
             return False
 
         if self.password.data != self.confirmpass.data:
-            print(self.password.errors)
             self.password.errors += ('Passwords do not match.',)
             return False
 
@@ -31,7 +29,7 @@ class RegistrationForm(FlaskForm):
         try:
             salt = bcrypt.gensalt()
             hashed_passwd = bcrypt.hashpw(bytes(self.password.data,'UTF-8'), salt)
-            #Hash for activation
+            #Code for activation
             # initializing size of string
             N = 32
             code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
@@ -67,8 +65,8 @@ class LoginForm(FlaskForm):
             return False
 
         #Validate the account
-        #Check account password matches hash - DONE
-        #Check account exists - DONE
+        #Check account password matches hash
+        #Check account exists
         #Check account is enabled
         account_found = Account.query.filter_by(email=self.email.data).first()
         if not account_found:
@@ -79,7 +77,6 @@ class LoginForm(FlaskForm):
             self.email.errors += ('Your account is locked out.',)
             return False
 
-        print('Found Account', self.password.data, account_found.password)
         if not bcrypt.checkpw(bytes(self.password.data,'UTF-8'), bytes(account_found.password,'UTF-8')):
             self.password.errors += ('Password is incorrect.',)
             return False
@@ -106,10 +103,8 @@ class ForgotForm(FlaskForm):
         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
         account_found.code = code
         db.session.commit()
-        print('Sending code', code)
         #SEND EMAIL
         activation_url = f'{Config.BASE_URL}/auth/reset/{code}'
-        print('actication code', activation_url)
         send_password_reset_email(self.email.data,account_found.username,activation_url)
         return True
 
@@ -127,13 +122,4 @@ class ResetPasswordForm(FlaskForm):
         if self.password.data != self.confirmpass.data:
             self.password.errors += ('Passwords do not match.',)
             return False
-
-        #Try to find account
-        # account_found = Account.query.filter_by(email=self.email.data).first()
-        # if not account_found:
-        #     self.email.errors += ('Sorry an account with this email address has not been found.',)
-        #     return False
-        # salt = bcrypt.gensalt()
-        # hashed_passwd = bcrypt.hashpw(bytes(self.password.data,'UTF-8'), salt)
-        # account_found.password = hashed_passwd
         return True

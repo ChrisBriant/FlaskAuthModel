@@ -40,39 +40,3 @@ def send_confirm_email(emailad,username,url):
     except Exception as e:
         print(e)
 
-
-# def send_calendar_link(emailad,name,img_name,img_url,advent_url):
-#     from_email = settings.ADMIN_SMTP
-#     to_email = emailad
-#     mail = Mail(from_email=from_email, to_emails=to_email)
-#     mail.template_id = TEMPLATES['ADVENT_SHARE_LINK']
-#     mail.dynamic_template_data = {
-#         'name' : name,
-#         'img_name' : img_name,
-#         'img_url' : img_url,
-#         'advent_url' : advent_url
-#     }
-#     try:
-#         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-#         response = sg.send(mail)
-#         return response
-#     except Exception as e:
-#         print(e)
-
-
-# def send_message_to_me(name,message_text):
-#     from_email = settings.ADMIN_SMTP
-#     to_email = settings.AUTHOR_SMTP
-#     mail = Mail(from_email=from_email, to_emails=to_email)
-#     mail.template_id = TEMPLATES['ADVENT_SEND_TO_ME']
-#     mail.dynamic_template_data = {
-#         'user' : name,
-#         'message_text' : message_text,
-#     }
-#     try:
-#         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-#         response = sg.send(mail)
-#         return response
-#     except Exception as e:
-#         print(e)
-

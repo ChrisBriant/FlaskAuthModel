@@ -1,7 +1,6 @@
 from flask import render_template, request, url_for, redirect
 from app.auth import bp
 from app.models.account import Account
-#from app.models.question import Question
 from app.extensions import db
 from flask_login import logout_user
 from .forms import *
@@ -12,7 +11,6 @@ def index():
     success_message = None
     form = LoginForm()
     if request.method == 'POST':
-        print('I will check the login details here')
         if form.validate_on_submit():
             return redirect(url_for('authed_content.index'))
     return render_template('auth/index.html',form=form,success_message=success_message)
@@ -21,15 +19,11 @@ def index():
 def register():
     form = RegistrationForm()
     if request.method == 'POST':
-        print('I will perform registration here')
         if form.validate_on_submit():
             #Send to the login form
             form = LoginForm()
             success_message = 'Thank you for registering. Please check your mailbox and follow the instructions to activate your account.'
             return render_template('auth/index.html',form=form,success_message=success_message)
-            print('Form is valid')
-        else:
-            print(form.errors)
     return render_template('auth/register.html',form=form)
 
 
@@ -39,7 +33,6 @@ def verify(code):
     if account_found:
         account_found.is_enabled = True
         db.session.commit()
-        print('Set the account to enabled')
     return render_template('auth/verify.html', account_found=account_found)
 
 @bp.route('/logout', methods=('GET', 'POST'))
@@ -76,5 +69,4 @@ def reset(code):
             success_message = 'Your password has been reset successfully, you can login below.'
             form = LoginForm()
             return redirect(url_for('auth.index',form=form,success_message=success_message))
-            #return render_template('auth/index.html',form=form,success_message=success_message)
     return render_template('auth/resetpassword.html',form=form,error_message=error_message)
